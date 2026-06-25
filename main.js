@@ -213,12 +213,62 @@ window.addEventListener("DOMContentLoaded", () => {
         });
       },
 
-      // Mobile fallback animation (no scroll-based logic)
+      // Mobile scroll animations (watermark effect so it doesn't affect text)
       "(max-width: 768px)": function () {
         gsap.to(".hero-bottle-wrapper", {
           opacity: 1,
           duration: 1,
           delay: 0.5,
+        });
+
+        // 1. Bottle animates on scroll from hero to intro
+        pinAndAnimate({
+          trigger: ".hero",
+          endTrigger: ".section-intro",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: 20, scale: 1 } },
+          ],
+          headerOffset,
+        });
+
+        // 2. Bottle shifts slightly during the intro section
+        pinAndAnimate({
+          trigger: ".section-intro",
+          endTrigger: ".timeline-entry:nth-child(even)",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: 5, scale: 0.5 } },
+            { target: ".hero-bottle-wrapper", vars: { x: "15%" } },
+          ],
+          markers: false,
+          headerOffset,
+        });
+
+        // 3. Bottle shifts left slightly during the first timeline entry
+        pinAndAnimate({
+          trigger: ".timeline-entry:nth-child(even)",
+          endTrigger: ".timeline-entry:nth-child(odd)",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: -5, scale: 0.5 } },
+            { target: ".hero-bottle-wrapper", vars: { x: "-15%" } },
+          ],
+          markers: false,
+          headerOffset,
+        });
+
+        // 4. Bottle slants just below the 1989 image
+        pinAndAnimate({
+          trigger: ".timeline-entry:nth-child(odd)",
+          endTrigger: ".timeline-entry:nth-child(odd) .timeline-img",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: 15, scale: 0.5 } },
+            { target: ".hero-bottle-wrapper", vars: { x: "0%", y: "160%" } },
+          ],
+          markers: false,
+          headerOffset,
         });
       },
     });

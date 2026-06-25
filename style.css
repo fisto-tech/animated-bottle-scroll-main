@@ -282,7 +282,7 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--papaya-whip);
+  background-color: transparent;
   background-size: cover;
   padding: 2rem;
   text-align: center;
@@ -361,6 +361,7 @@ footer {
 
   .hero-bottle-wrapper {
     height: 25rem;
+    z-index: 4; /* Place above the text sections */
   }
 
   .hero-stamp {
@@ -370,11 +371,24 @@ footer {
   .hero-content h1 {
     font-size: 15vw;
   }
+
+  /* Force transparency on mobile so bottle is never hidden */
+  .hero, .section-intro, .timeline-section, .ingredients-log, .timeline-entry, main {
+    background-color: transparent !important;
+  }
+  .hero-bottle-wrapper, .pin-spacer {
+    overflow: visible !important;
+  }
+  
+  /* Place intro and timeline text in front of the bottle */
+  .section-intro, .timeline-section {
+    z-index: 5 !important; 
+  }
 }
 
 /* === Intro Section (below hero) === */
 .section-intro {
-  background-color: var(--papaya-whip);
+  background-color: transparent;
   border-top: 1px solid var(--tan);
   padding: 1rem 2rem;
   position: relative;
@@ -549,6 +563,8 @@ footer {
   border-top: 1px solid var(--tan);
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1; /* Stay above the bottle wrapper */
 }
 
 /* Each Timeline Entry Block */
@@ -658,6 +674,11 @@ footer {
 
   .timeline-left {
     margin-bottom: 2rem;
+  }
+
+  /* Create large space for the bottle in the final entry */
+  .timeline-entry:nth-child(odd) .timeline-left {
+    margin-bottom: 16rem; 
   }
 
   .timeline-title {
