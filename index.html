@@ -8,8 +8,10 @@
   <title>GSAP | Animated Bottle Scroll</title>
 
   <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;700&display=swap"
     rel="stylesheet" />
 
   <!-- Main Stylesheet -->
@@ -20,18 +22,28 @@
 
   <!-- ================== HEADER ================== -->
   <header style="--border-width:0;">
-    <div class="header-inner">
-
+    <div class="header-left">
       <!-- Logo -->
-      <div class="logo">CraftEdge</div>
-
+      <div class="logo">
+        <svg class="leaf-icon" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill="var(--primary)" fill-rule="evenodd" d="M7.912 5.205c-1.301-1.302-2.927-1.847-4.198-2.07a10 10 0 0 0-1.6-.152a8 8 0 0 0-.608.015l-.037.003h-.01l-.004.001h-.002l-.38.036l-.065.376v.001l-.001.004l-.002.012l-.008.045l-.023.163A13.4 13.4 0 0 0 .89 6.172c.098 1.511.508 3.434 1.844 4.77c1.306 1.306 2.898 1.815 4.14 2.001a9 9 0 0 0 1.625.095v-.83L4.646 8.353l.708-.708L8.5 10.793V5.926q-.258-.39-.588-.72M1.5 3.5l-.047-.498zm-.492-.086L1.5 3.5zM9.5 7.3v3.66l1.688-1.35l.624.78L9.5 12.24v.788a8 8 0 0 0 1.094-.062c.909-.117 2.09-.442 2.968-1.32c.886-.887 1.227-2.226 1.362-3.259a11 11 0 0 0 .078-1.878L15 6.477v-.01l-.001-.002v-.001l-.03-.402l-.398-.057h-.004l-.009-.002l-.03-.004l-.111-.013a10 10 0 0 0-1.682-.028c-.977.072-2.265.331-3.095 1.196l-.04.04zm5-.8l.5-.036zm.071-.495l-.07.495z" clip-rule="evenodd"/>
+        </svg>
+        <span class="logo-text">VERNORA</span>
+        <span class="logo-sub">PURE BY NATURE</span>
+      </div>
+    </div>
+    
+    <div class="header-right">
       <!-- Desktop Navigation -->
       <nav class="desktop-nav">
         <a href="#">Home</a>
+        <a href="#">Our Story</a>
         <a href="#">Features</a>
-        <a href="#">Product</a>
+        <a href="#">Products</a>
         <a href="#">Contact</a>
       </nav>
+
+      <a href="#" class="header-cta">Order Now</a>
 
       <!-- Hamburger Icon for Mobile -->
       <div class="hamburger" onclick="toggleMobileNav()">
@@ -44,8 +56,9 @@
     <!-- Mobile Navigation Menu -->
     <div class="mobile-nav" id="mobileMenu">
       <a href="#">Home</a>
+      <a href="#">Our Story</a>
       <a href="#">Features</a>
-      <a href="#">Product</a>
+      <a href="#">Products</a>
       <a href="#">Contact</a>
     </div>
   </header>
@@ -53,169 +66,149 @@
   <!-- ================== MAIN CONTENT ================== -->
   <main id="smooth-content">
 
+    <!-- Social Sidebar (Fixed vertical navigation) repurposed as left panel -->
+    <aside class="social-sidebar" style="--border-height:0;">
+      <div class="sidebar-number">01</div>
+    </aside>
+
     <!-- Hero Bottle Overlay Wrapper -->
     <div class="hero-bottle-wrapper">
-      <img src="./image.png" alt="Crimson Fermentation Bottle"
+      <img src="./image.png" alt="Vernora Water Bottle"
         class="hero-bottle" />
     </div>
 
     <!-- Hero Section -->
     <section class="hero vintage-hero">
+      
+      <!-- Right Side Leaf -->
+      <img src="./smallleafimage.png" alt="Leaf" class="hero-right-leaf">
+      
       <div class="hero-content">
-        <!-- Decorative Stamp -->
-        <img src="./stamp.png" alt="Crimson Fermentation Stamp"
-          class="hero-stamp">
-
         <!-- Main Heading -->
         <h1>
-          <span class="line">Crimson</span>
-          <span class="line highlight">Fermentation</span>
+          <span class="line">VERNORA'S PUREST.</span>
+          <span class="line highlight">CRAFTED FOR YOU</span>
         </h1>
       </div>
+
+      <div class="hero-bottom-left">
+        <div class="hero-divider">
+          <span class="divider-line"></span>
+          <svg class="divider-leaf" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 21c.5-4.5 2.5-8 7-10"/>
+            <path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5z"/>
+          </svg>
+        </div>
+        <p class="hero-description">
+          Designed for modern lifestyles, Vernora Water Bottles combine durability, elegance, and everyday convenience. Stay hydrated whether you're at work, traveling, or exploring outdoors.
+        </p>
+      </div>
+
     </section>
 
     <!-- Introduction Section -->
     <section class="section-intro">
+      <!-- 02 Sidebar indicator for this section -->
+      <div class="sidebar-number-container">
+        <div class="sidebar-number">02</div>
+      </div>
+
       <div class="intro-grid">
 
         <!-- Left Side: Headings and Description -->
         <div class="intro-left">
-          <p class="small-title">Our Selection</p>
-          <h2 class="main-heading">The Heritage Line</h2>
+          <p class="small-title">WHY VERNORA</p>
+          <h2 class="main-heading">BUILT FOR<br>EVERY<br>ADVENTURE</h2>
           <p class="description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-            suscipit soluta tenetur voluptatibus libero dolorum.
+            Engineered with premium materials and a sleek modern design, Vernora bottles are crafted to keep up with your active lifestyle.
           </p>
-          <a href="#" class="cta-box">Explore All</a>
+          
+          <div class="hero-divider" style="margin-top: 2rem;">
+            <span class="divider-line" style="background-color: #fff; opacity: 0.6;"></span>
+            <svg class="divider-leaf" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" style="opacity: 0.6; transform: rotate(45deg);">
+              <path d="M5 21c.5-4.5 2.5-8 7-10"/>
+              <path d="M9 18c6.218 0 10.5-3.288 11-12V4h-4.014c-9 0-11.986 4-12 9c0 1 0 3 2 5z"/>
+            </svg>
+          </div>
         </div>
 
-        <!-- Right Side: Ingredients List -->
-        <div class="intro-right">
-          <div class="ingredients-log">
-            <h3 class="ingredients-title">Brewed With</h3>
+        <!-- Center: Empty space for bottle -->
+        <div class="intro-center" style="flex: 1;"></div>
 
-            <!-- Each Ingredient -->
-            <div class="ingredient-item">
-              <div class="ingredient-qty">500ml</div>
-              <div class="ingredient-text">
-                <strong>Spring Water</strong>
-                <p>Pure glacier-sourced for clarity and smoothness.</p>
-              </div>
+        <!-- Right Side: Features List -->
+        <div class="intro-right features-right">
+          <div class="features-list">
+            <div class="feature-item">
+              <h3 class="feature-title">Leak-Proof Design</h3>
+              <p class="feature-desc">No spills. No mess. Carry confidently wherever you go.</p>
             </div>
-
-            <div class="ingredient-item">
-              <div class="ingredient-qty">250g</div>
-              <div class="ingredient-text">
-                <strong>Organic Barley</strong>
-                <p>Locally malted for a rich, golden body.</p>
-              </div>
+            <div class="feature-item">
+              <h3 class="feature-title">Premium Build</h3>
+              <p class="feature-desc">Made from high-quality BPA-free materials</p>
             </div>
-
-            <div class="ingredient-item">
-              <div class="ingredient-qty">100g</div>
-              <div class="ingredient-text">
-                <strong>Wild Hops</strong>
-                <p>Foraged from mountain slopes, slow-dried.</p>
-              </div>
+            <div class="feature-item">
+              <h3 class="feature-title">Lightweight Body</h3>
+              <p class="feature-desc">Comfortable to carry throughout the day.</p>
             </div>
-
-            <div class="ingredient-item">
-              <div class="ingredient-qty">50g</div>
-              <div class="ingredient-text">
-                <strong>Roasted Oak</strong>
-                <p>Infused for warmth and oaky aroma.</p>
-              </div>
+            <div class="feature-item">
+              <h3 class="feature-title">Temperature Retention</h3>
+              <p class="feature-desc">Keeps beverages fresh for longer periods.</p>
             </div>
-
-            <div class="ingredient-item">
-              <div class="ingredient-qty">1%</div>
-              <div class="ingredient-text">
-                <strong>Natural Yeast</strong>
-                <p>Wild fermented, slow-aged for balance.</p>
-              </div>
+            <div class="feature-item">
+              <h3 class="feature-title">Eco Friendly</h3>
+              <p class="feature-desc">Reduce single-use plastic and choose sustainability.</p>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Timeline Section -->
+    <!-- Black Spacer between Section 2 and Section 3 -->
+    <div class="black-spacer"></div>
+
+    <!-- Timeline Section (Section 3) -->
     <section class="timeline-section">
-      <h2 class="timeline-main-title">Our Timeline</h2>
+      <!-- 03 Sidebar indicator for this section -->
+      <div class="sidebar-number-container sidebar-03">
+        <div class="sidebar-number">03</div>
+      </div>
+      
+      <!-- Top Left: Headings and Description -->
+      <div class="intro-left" style="margin-bottom: 6rem;">
+        <p class="small-title">SMART FEATURES</p>
+        <h2 class="main-heading">DETAILS THAT<br>MAKE A DIFFERENCE</h2>
+        <p class="description" style="max-width: 400px; color: #ccc;">
+          Thoughtfully designed with features that ensure safety, convenience, and long-lasting performance.
+        </p>
+      </div>
 
-      <!-- First Timeline Entry -->
-      <div class="timeline-entry">
-        <!-- Left Column: Date + Image -->
-        <div class="timeline-left">
-          <div class="timeline-date">1984</div>
-          <img src="./first batch.png" alt="Vintage Brewery Photo"
-            class="timeline-img" />
-        </div>
-
-        <!-- Right Column: Story -->
-        <div class="timeline-right">
-          <h3 class="timeline-title">The First Batch</h3>
-          <p class="timeline-description">
-            Our journey began in a wooden barn nestled among oak trees.
-            The first batch was brewed with hand-milled barley and patience.
-          </p>
+      <!-- Feature 01 -->
+      <div class="smart-feature feature-left">
+        <div class="feature-big-number">01</div>
+        <div class="feature-text-block">
+          <h3 class="feature-heading">LEAK-PROOF CAP</h3>
+          <p class="feature-detail">Engineered with a secure locking mechanism that prevents unwanted spills during travel, work, or outdoor activities.</p>
         </div>
       </div>
 
-      <!-- Second Timeline Entry -->
-      <div class="timeline-entry">
-        <div class="timeline-left">
-          <div class="timeline-date">1989</div>
-          <img src="./first batch.png" alt="Vintage Brewery Photo"
-            class="timeline-img" />
+      <!-- Feature 02 -->
+      <div class="smart-feature feature-right" style="margin-top: 8rem;">
+        <div class="feature-text-block text-right">
+          <h3 class="feature-heading">EASY REFILL & CLEAN</h3>
+          <p class="feature-detail">The wide-mouth design makes cleaning simple and allows quick refills with water, ice cubes, or your favorite beverages.</p>
         </div>
-
-        <div class="timeline-right">
-          <h3 class="timeline-title">The Fire Oak Revival</h3>
-          <p class="timeline-description">
-            A lightning storm sparked a fire that nearly ended our legacy.
-            But from the ashes, we rebuilt — charred oak barrels, reclaimed
-            tools, and a vow to never compromise the craft.
-          </p>
-        </div>
+        <div class="feature-big-number">02</div>
       </div>
     </section>
 
-    <!-- Social Sidebar (Fixed vertical navigation) -->
-    <aside class="social-sidebar" style="--border-height:0;">
-      <nav>
-        <!-- Instagram -->
-        <a href="#" aria-label="Instagram">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M7.75 2A5.75 5.75 0 0 0 2 7.75v8.5A5.75 5.75 0 0 0 7.75 22h8.5A5.75 5.75 0 0 0 22 16.25v-8.5A5.75 5.75 0 0 0 16.25 2h-8.5Zm.5 1.5h7.5a4.25 4.25 0 0 1 4.25 4.25v7.5a4.25 4.25 0 0 1-4.25 4.25h-7.5a4.25 4.25 0 0 1-4.25-4.25v-7.5a4.25 4.25 0 0 1 4.25-4.25Zm8.5 2.75a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Zm-5.25 1.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z" />
-          </svg>
-        </a>
 
-        <!-- LinkedIn -->
-        <a href="#" aria-label="LinkedIn">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M19 3A2 2 0 0 1 21 5v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14Zm-3.75 7.25h-.08a2.11 2.11 0 0 0-1.92 1.18V10.5h-2.5v6.75h2.5v-3.43c0-.87.65-1.57 1.45-1.57s1.3.7 1.3 1.57v3.43H18.5v-3.87c0-1.88-1.16-2.81-2.25-2.81ZM7.5 10.5H10V17.25H7.5V10.5Zm1.25-3a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z" />
-          </svg>
-        </a>
-
-        <!-- Twitter -->
-        <a href="#" aria-label="Twitter">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path
-              d="M21 5.92a8.18 8.18 0 0 1-2.36.65 4.12 4.12 0 0 0 1.8-2.27 8.21 8.21 0 0 1-2.6.99 4.1 4.1 0 0 0-7 3.73 11.65 11.65 0 0 1-8.46-4.3 4.1 4.1 0 0 0 1.27 5.48 4.07 4.07 0 0 1-1.86-.52v.05a4.1 4.1 0 0 0 3.29 4.02 4.07 4.07 0 0 1-1.85.07 4.1 4.1 0 0 0 3.83 2.85A8.24 8.24 0 0 1 2 19.53a11.62 11.62 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.68v-.53a8.36 8.36 0 0 0 2.06-2.13Z" />
-          </svg>
-        </a>
-      </nav>
-    </aside>
   </main>
 
   <!-- ================== FOOTER ================== -->
   <footer>
     <div class="footer-inner">
       <!-- Logo -->
-      <div class="footer-logo">CraftEdge</div>
+      <div class="footer-logo">VERNORA</div>
 
       <!-- Navigation Links -->
       <div class="footer-links">
@@ -226,7 +219,7 @@
 
       <!-- Contact and Social Links -->
       <div class="footer-contact">
-        <a href="#">hello@craftedge.com</a>
+        <a href="#">hello@vernora.com</a>
         <a href="#">Instagram</a>
         <a href="#">LinkedIn</a>
       </div>

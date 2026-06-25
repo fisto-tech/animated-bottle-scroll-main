@@ -35,18 +35,7 @@ window.addEventListener("DOMContentLoaded", () => {
         },
         0
       )
-      // Slide in desktop nav links & sidebar icons from above
-      .from(
-        ".desktop-nav a, .social-sidebar a",
-        {
-          y: -100,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: "power3.out",
-        },
-        0
-      )
+      // Slide in desktop nav links animation removed to prevent disappearing links
       // Animate sidebar border height
       .to(
         ".social-sidebar",
@@ -65,14 +54,13 @@ window.addEventListener("DOMContentLoaded", () => {
         },
         0
       )
-      // Animate text stroke to solid color
+      // Animate text color (if needed, though already primary)
       .to(
         ".hero-content h1",
         {
           delay: 0.5,
           duration: 1.2,
-          color: "var(--sienna)",
-          "-webkit-text-stroke": "0px var(--sienna)",
+          color: "var(--primary)",
         },
         0
       )
@@ -98,31 +86,6 @@ window.addEventListener("DOMContentLoaded", () => {
           delay: 1.5,
           duration: 1.3,
           ease: "power3.out",
-        },
-        0
-      )
-      // Pop-in stamp image with scaling
-      .to(
-        ".hero-stamp",
-        {
-          opacity: 1,
-          scale: 1,
-          delay: 2,
-          duration: 0.2,
-          ease: "back.out(3)",
-        },
-        0
-      )
-      // Subtle vibration/bounce effect on the stamp
-      .to(
-        ".hero-stamp",
-        {
-          y: "+=5",
-          x: "-=3",
-          repeat: 2,
-          yoyo: true,
-          duration: 0.05,
-          ease: "power1.inOut",
         },
         0
       );
@@ -189,7 +152,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 2. Bottle shifts right during the intro section
         pinAndAnimate({
           trigger: ".section-intro",
-          endTrigger: ".timeline-entry:nth-child(even)",
+          endTrigger: ".black-spacer",
           pin: ".hero-bottle-wrapper",
           animations: [
             { target: ".hero-bottle", vars: { rotate: 10, scale: 0.7 } },
@@ -199,17 +162,15 @@ window.addEventListener("DOMContentLoaded", () => {
           headerOffset,
         });
 
-        // 3. Bottle shifts left during the first timeline entry
-        pinAndAnimate({
-          trigger: ".timeline-entry:nth-child(even)",
-          endTrigger: ".timeline-entry:nth-child(odd)",
-          pin: ".hero-bottle-wrapper",
-          animations: [
-            { target: ".hero-bottle", vars: { rotate: -10, scale: 0.7 } },
-            { target: ".hero-bottle-wrapper", vars: { x: "-25%" } },
-          ],
-          markers: false,
-          headerOffset,
+        // 3. Fade out the bottle wrapper before Section 3
+        gsap.to(".hero-bottle-wrapper", {
+          scrollTrigger: {
+            trigger: ".black-spacer",
+            start: "top center",
+            end: "bottom center",
+            scrub: true
+          },
+          opacity: 0
         });
       },
 
@@ -235,7 +196,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 2. Bottle shifts slightly during the intro section
         pinAndAnimate({
           trigger: ".section-intro",
-          endTrigger: ".timeline-entry:nth-child(even)",
+          endTrigger: ".black-spacer",
           pin: ".hero-bottle-wrapper",
           animations: [
             { target: ".hero-bottle", vars: { rotate: 5, scale: 0.5 } },
@@ -245,30 +206,15 @@ window.addEventListener("DOMContentLoaded", () => {
           headerOffset,
         });
 
-        // 3. Bottle shifts left slightly during the first timeline entry
-        pinAndAnimate({
-          trigger: ".timeline-entry:nth-child(even)",
-          endTrigger: ".timeline-entry:nth-child(odd)",
-          pin: ".hero-bottle-wrapper",
-          animations: [
-            { target: ".hero-bottle", vars: { rotate: -5, scale: 0.5 } },
-            { target: ".hero-bottle-wrapper", vars: { x: "-15%" } },
-          ],
-          markers: false,
-          headerOffset,
-        });
-
-        // 4. Bottle slants just below the 1989 image
-        pinAndAnimate({
-          trigger: ".timeline-entry:nth-child(odd)",
-          endTrigger: ".timeline-entry:nth-child(odd) .timeline-img",
-          pin: ".hero-bottle-wrapper",
-          animations: [
-            { target: ".hero-bottle", vars: { rotate: 15, scale: 0.5 } },
-            { target: ".hero-bottle-wrapper", vars: { x: "0%", y: "160%" } },
-          ],
-          markers: false,
-          headerOffset,
+        // 3. Fade out the bottle wrapper before Section 3
+        gsap.to(".hero-bottle-wrapper", {
+          scrollTrigger: {
+            trigger: ".black-spacer",
+            start: "top center",
+            end: "bottom center",
+            scrub: true
+          },
+          opacity: 0
         });
       },
     });

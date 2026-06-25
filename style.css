@@ -9,12 +9,19 @@
 
 /* === CSS Variables: Global Colors === */
 :root {
+  --primary: #374732; /* Dark Green */
+  --primary-light: #496043;
+  --bg-color: #f7f4eb; /* Off-white / light beige */
+  --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #f4eee2 100%);
+  --text-color: #666666;
+  --border-color: rgba(55, 71, 50, 0.1);
+  
   --sienna: #b1560e;
   --sienna-2: #92633a;
   --white: #ffffff;
-  --black: #000000;
+  --black: #111111;
   --tan: #c19f7a;
-  --papaya-whip: #eae0c7;
+  --papaya-whip: #f7f4eb;
 }
 
 /* === Global Reset === */
@@ -28,8 +35,8 @@
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
-  background-color: var(--papaya-whip);
-  color: var(--black);
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
 
 /* === Header Bar === */
@@ -37,57 +44,109 @@ header {
   position: sticky; /* sticks to top on scroll */
   top: 0;
   z-index: 999;
-  background-color: var(--papaya-whip);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-/* Bottom border animation (controlled via JS) */
-header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  width: var(--border-width);
-  background-color: var(--tan);
-}
-
-/* Header content layout */
-.header-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 1.2rem 2rem;
+  background-color: var(--bg-color); /* Added solid background so shadow shows properly over content */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  height: 100px;
+  border-bottom: none;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
 }
 
-/* Logo Text */
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 103px;
+  width: 1px;
+  height: 100%;
+  background-color: var(--border-color);
+}
+
+header::after {
+  display: none;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 130px;
+  height: 100%;
+}
+
 .logo {
-  font-family: "Veneer", serif;
-  font-weight: 100;
-  font-size: 2.5rem;
-  color: var(--sienna);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.logo .leaf-icon {
+  width: 26px;
+  height: 26px;
+  margin-bottom: 2px;
+}
+
+.logo-text {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1;
+  letter-spacing: 0.5px;
+}
+
+.logo-sub {
+  font-size: 0.45rem;
+  font-weight: 600;
   letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding-right: 3rem;
+  gap: 3rem;
 }
 
 /* Desktop Nav Menu */
-nav {
+nav.desktop-nav {
   display: flex;
   gap: 2.5rem;
 }
 
 /* Nav Link Styling */
-nav a {
-  font-weight: bold;
-  color: var(--sienna);
+nav.desktop-nav a {
+  font-weight: 600;
+  color: var(--primary);
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  font-size: 0.95rem;
+  transition: opacity 0.3s ease;
 }
 
-nav a:hover {
-  color: var(--black);
+nav.desktop-nav a:hover {
+  opacity: 0.7;
+}
+
+.header-cta {
+  background-color: var(--primary);
+  color: #fff;
+  padding: 0.6rem 1.8rem;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.3s;
+  box-shadow: 0 20px 40px rgba(55, 71, 50, 0.35), 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.header-cta:hover {
+  background-color: var(--primary-light);
+  box-shadow: 0 22px 45px rgba(55, 71, 50, 0.4), 0 8px 20px rgba(0,0,0,0.15);
 }
 
 /* Hamburger Icon (hidden by default) */
@@ -101,89 +160,67 @@ nav a:hover {
 .hamburger div {
   width: 26px;
   height: 3px;
-  background: var(--black);
+  background: var(--primary);
 }
 
 /* Mobile Nav Menu */
 .mobile-nav {
   display: none;
   flex-direction: column;
-  background: var(--sienna);
+  background: var(--primary);
   padding: 1rem 2rem;
-  border-top: 1px solid var(--tan);
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 100%;
 }
 
 .mobile-nav a {
   padding: 0.75rem 0;
   font-size: 1rem;
-  color: var(--papaya-whip);
+  color: #fff;
   text-decoration: none;
 }
 
 .mobile-nav a:hover {
-  color: var(--sienna);
+  opacity: 0.8;
 }
 
 /* === Main Content Wrapper === */
 main {
-  padding-left: 103px; /* space for fixed social sidebar */
+  padding-left: 103px; /* space for fixed left sidebar */
   position: relative;
 }
 
-/* === Vertical Social Media Sidebar === */
+/* === Left Sidebar Panel === */
 .social-sidebar {
   position: absolute;
   width: 103px;
   top: 0;
   left: 0;
   z-index: 900;
-  margin: 0 auto;
-  padding: 2rem;
+  margin: 0;
   height: 100%;
-  background-color: var(--papaya-whip);
+  border-right: 1px solid var(--border-color);
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  padding-top: 4rem;
+}
+
+.sidebar-number {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 3.5rem;
+  color: var(--primary);
+  line-height: 1;
+  position: sticky;
+  top: 140px;
 }
 
 /* Sidebar right border animation */
 .social-sidebar::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: var(--border-height);
-  width: 1px;
-  background-color: var(--tan);
-}
-
-/* Sticky icon stack */
-.social-sidebar nav {
-  position: sticky;
-  top: 8rem;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Individual Social Icons */
-.social-sidebar a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--sienna);
-  border-radius: 50%;
-  background-color: var(--papaya-whip);
-  color: var(--sienna);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.social-sidebar a:hover {
-  background-color: var(--sienna);
-  color: var(--papaya-whip);
-}
-
-.social-sidebar svg {
-  width: 18px;
-  height: 18px;
+  display: none;
 }
 
 /* === Responsive Sidebar Behavior for Mobile === */
@@ -192,33 +229,35 @@ main {
     padding-left: 0;
   }
 
+  .header-left {
+    border-right: none;
+  }
+  
   .social-sidebar {
-    position: sticky;
-    top: unset;
-    padding: 1rem;
-    bottom: 0;
-    width: 100%;
-    height: 80px;
+    display: none; /* Hide on mobile to keep it clean */
   }
 
-  .social-sidebar nav {
-    position: relative;
-    top: 0;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  nav.desktop-nav {
+    display: none;
+  }
+  
+  .header-cta {
+    display: none;
   }
 
-  .social-sidebar::after {
-    width: 100%;
-    height: 1px;
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-nav.show {
+    display: flex;
   }
 }
 
 /* === Footer Section === */
 footer {
-  background: var(--sienna-2);
-  color: var(--white);
+  background: #121212;
+  color: var(--black);
   padding: 3rem 2rem;
   min-height: 50vh;
 }
@@ -250,14 +289,14 @@ footer {
 
 .footer-links a,
 .footer-contact a {
-  color: var(--papaya-whip);
+  color: var(--sienna);
   font-size: 0.95rem;
   text-decoration: none;
 }
 
 .footer-links a:hover,
 .footer-contact a:hover {
-  color: var(--tan);
+  color: var(--black);
 }
 
 /* === Responsive Header Behavior === */
@@ -278,33 +317,44 @@ footer {
 /* === Hero Section === */
 .hero {
   position: relative;
-  min-height: calc(50rem - 80px);
+  min-height: calc(100vh - 100px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  background-size: cover;
+  background: var(--bg-gradient);
   padding: 2rem;
   text-align: center;
   overflow: hidden;
 }
 
+.hero-right-leaf {
+  position: absolute;
+  right: -5%;
+  top: 15%;
+  width: 450px;
+  max-width: 45vw;
+  height: auto;
+  z-index: 5;
+  filter: drop-shadow(-10px 10px 20px rgba(0,0,0,0.2));
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
+  width: 100%;
+  padding-bottom: 5rem;
 }
 
 /* Big Heading Animation Target */
 .hero-content h1 {
-  font-family: "Veneer", serif;
-  font-weight: 100;
-  font-size: clamp(8rem, 16vw, 12rem);
+  font-family: "Oswald", sans-serif;
+  font-weight: 700;
+  font-size: clamp(5.5rem, 11vw, 8.5rem);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  margin: 0.5rem 0;
-  line-height: 0.8;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--sienna);
+  letter-spacing: -1px;
+  margin: 0;
+  line-height: 0.95;
+  color: var(--primary);
   opacity: 0;
 }
 
@@ -312,12 +362,46 @@ footer {
   display: block;
 }
 
+.hero-bottom-left {
+  position: absolute;
+  left: 3rem;
+  bottom: 3rem;
+  text-align: left;
+  max-width: 400px;
+  z-index: 5;
+}
+
+.hero-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.divider-line {
+  height: 1px;
+  width: 150px;
+  background-color: var(--primary);
+}
+
+.divider-leaf {
+  width: 24px;
+  height: 24px;
+  transform: rotate(45deg);
+}
+
+.hero-description {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
 /* Bottle wrapper for scroll animation */
 .hero-bottle-wrapper {
   position: absolute;
   left: 0;
   top: 0;
-  height: 45rem;
+  height: 100vh;
   width: 100%;
   z-index: 4;
   opacity: 0;
@@ -335,41 +419,40 @@ footer {
   width: auto;
   height: 100%;
   margin: 0 auto;
-  filter: drop-shadow(8px 8px 12px rgba(0, 0, 0, 0.15));
+  filter: drop-shadow(15px 15px 20px rgba(0, 0, 0, 0.25));
   transform: rotate(20deg);
   transition: filter 0.3s ease;
-}
-
-/* Hero stamp image animation target */
-.hero-stamp {
-  position: absolute;
-  left: 35%;
-  top: 0;
-  right: 0;
-  z-index: 5;
-  transform: translate(-50%, -50%) rotate(-20deg) scale(100);
-  opacity: 0;
-  max-width: 150px;
-  filter: brightness(0.5);
 }
 
 /* === Responsive Hero Section === */
 @media (max-width: 768px) {
   .hero {
-    min-height: calc(30rem - 80px);
+    min-height: calc(80vh - 100px);
   }
 
   .hero-bottle-wrapper {
-    height: 25rem;
+    height: 60vh;
     z-index: 4; /* Place above the text sections */
   }
 
-  .hero-stamp {
-    max-width: 100px;
+  .hero-right-leaf {
+    width: 200px;
+    right: -10%;
+    top: 50%;
   }
 
   .hero-content h1 {
     font-size: 15vw;
+  }
+
+  .hero-bottom-left {
+    left: 1rem;
+    bottom: 1rem;
+    max-width: 300px;
+  }
+
+  .divider-line {
+    width: 80px;
   }
 
   /* Force transparency on mobile so bottle is never hidden */
@@ -389,10 +472,19 @@ footer {
 /* === Intro Section (below hero) === */
 .section-intro {
   background-color: transparent;
-  border-top: 1px solid var(--tan);
   padding: 1rem 2rem;
   position: relative;
   z-index: 1;
+}
+
+.section-intro::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -103px;
+  width: calc(100% + 103px);
+  height: 1px;
+  background-color: var(--tan);
 }
 
 /* === Intro Section Grid Layout === */
@@ -457,6 +549,12 @@ footer {
 
 /* === Responsive Intro Section === */
 @media (max-width: 768px) {
+  .section-intro::before,
+  .timeline-section::before {
+    left: 0;
+    width: 100%;
+  }
+
   .intro-grid {
     text-align: center;
     flex-direction: column;
@@ -478,28 +576,84 @@ footer {
   }
 }
 
-/* === Ingredients Log Container === */
-.ingredients-log {
-  background: transparent;
-  padding: 1rem 0;
+/* === Section 2 Overrides === */
+.section-intro {
+  background-image: url('./section2BG.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 6rem 2rem;
+  margin-left: -103px;
+  padding-left: calc(103px + 2rem);
 }
 
-/* Ingredients Section Title */
-.ingredients-title {
-  font-family: "Veneer", serif;
-  font-size: 1.75rem;
-  color: var(--sienna);
-  margin-bottom: 2.5rem;
-  text-transform: uppercase;
-  text-align: left;
-  letter-spacing: 1px;
+@media (max-width: 768px) {
+  .section-intro {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
 }
 
-/* Single Ingredient Entry Layout */
-.ingredient-item {
+.section-intro::before {
+  display: none; /* remove the tan line from before if it interferes */
+}
+
+/* Sidebar "02" within Section 2 */
+.sidebar-number-container {
+  position: absolute;
+  top: 6rem;
+  left: 0;
+  width: 103px;
   display: flex;
-  gap: 1.5rem;
+  justify-content: center;
+  color: #fff;
+}
+
+.sidebar-number-container .sidebar-number {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  opacity: 0.6;
+}
+
+/* Intro Paragraph Description */
+.section-intro .description {
+  font-size: 1rem;
+  color: #ccc;
+  line-height: 1.6;
   margin-bottom: 2rem;
+}
+
+.section-intro .small-title {
+  color: #fff;
+}
+
+.section-intro .main-heading {
+  color: #fff;
+}
+
+/* === Features List === */
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  text-align: left;
+}
+
+.feature-title {
+  font-family: "Inter", sans-serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.feature-desc {
+  font-size: 0.95rem;
+  color: #ccc;
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Quantity Value (e.g. 500ml) */
@@ -557,46 +711,151 @@ footer {
   }
 }
 
-/* === Timeline Section === */
+/* === Black Spacer === */
+.black-spacer {
+  background-color: #000;
+  height: 120px;
+  margin-left: -103px;
+  position: relative;
+  z-index: 2;
+  border-top: 2px solid #000; /* Just in case */
+  border-bottom: 2px solid #000;
+}
+
+@media (max-width: 768px) {
+  .black-spacer {
+    margin-left: 0;
+  }
+}
+
+/* === Timeline Section (Section 3) === */
 .timeline-section {
+  background-image: url('./section3BG.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
   padding: 6rem 0rem 3rem;
-  border-top: 1px solid var(--tan);
+  margin-left: -103px;
+  padding-left: calc(103px + 2rem);
   display: flex;
   flex-direction: column;
+  height: 2879px;
   position: relative;
-  z-index: 1; /* Stay above the bottle wrapper */
 }
 
-/* Each Timeline Entry Block */
-.timeline-entry {
-  margin: 0;
-  padding: 0 2rem 0;
+@media (max-width: 768px) {
+  .timeline-section {
+    margin-left: 0;
+    padding-left: 2rem;
+  }
+}
+
+/* 03 Sidebar */
+.sidebar-03 {
+  top: 6rem;
+}
+
+.timeline-section::before {
+  display: none; /* Removed the tan horizontal line */
+}
+
+/* Make text white in timeline section to match the design */
+.timeline-section .small-title,
+.timeline-section .main-heading {
+  color: #fff;
+}
+
+/* === Section 3 Smart Features === */
+.smart-feature {
   display: flex;
-  gap: 3rem;
   align-items: center;
-  min-height: 600px;
-  max-width: 70%;
+  gap: 2rem;
+  width: 100%;
+  max-width: 900px;
+  position: relative;
+  z-index: 10;
 }
 
-/* Alternate Entry Layout (odd/even) */
-.timeline-entry:nth-child(odd) {
-  margin-left: auto;
-}
-
-.timeline-entry:nth-child(odd) .timeline-left {
-  order: 2;
-}
-
-.timeline-entry:nth-child(odd) .timeline-right {
-  order: 1;
-}
-
-.timeline-entry:nth-child(even) {
+.feature-left {
+  margin-left: 0;
   margin-right: auto;
 }
 
-.timeline-entry:last-child {
-  margin-bottom: 0rem;
+.feature-right {
+  margin-left: auto;
+  margin-right: 0;
+  justify-content: flex-end;
+}
+
+.feature-big-number {
+  font-family: 'Oswald', sans-serif;
+  font-size: 6.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: #fff;
+  opacity: 0.9;
+}
+
+.feature-text-block {
+  max-width: 350px;
+}
+
+.feature-text-block.text-right {
+  text-align: right;
+}
+
+.feature-heading {
+  font-family: "Veneer", serif;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.feature-detail {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin: 0;
+}
+
+.feature-bottle {
+  width: 280px;
+  height: auto;
+  position: absolute;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.6));
+  z-index: -1;
+}
+
+.feature-bottle-right {
+  right: -320px;
+  top: -80px;
+  transform: rotate(15deg);
+}
+
+.feature-bottle-left {
+  left: -320px;
+  top: -80px;
+  transform: rotate(-15deg);
+}
+
+/* === Responsive Section 3 === */
+@media (max-width: 1024px) {
+  .feature-bottle {
+    display: none; /* Hide floating bottles on smaller screens to prevent overflow */
+  }
+}
+
+@media (max-width: 768px) {
+  .smart-feature {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .feature-text-block.text-right {
+    text-align: center;
+  }
 }
 
 /* Main Section Title (Big Year Heading) */
