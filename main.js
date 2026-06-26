@@ -162,15 +162,17 @@ window.addEventListener("DOMContentLoaded", () => {
           headerOffset,
         });
 
-        // 3. Fade out the bottle wrapper before Section 3
-        gsap.to(".hero-bottle-wrapper", {
-          scrollTrigger: {
-            trigger: ".black-spacer",
-            start: "top center",
-            end: "bottom center",
-            scrub: true
-          },
-          opacity: 0
+        // 3. Bottle shifts left during Section 3
+        pinAndAnimate({
+          trigger: ".timeline-section",
+          endTrigger: "footer",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: -10, scale: 0.7 } },
+            { target: ".hero-bottle-wrapper", vars: { x: "-25%" } },
+          ],
+          markers: false,
+          headerOffset,
         });
       },
 
@@ -206,15 +208,17 @@ window.addEventListener("DOMContentLoaded", () => {
           headerOffset,
         });
 
-        // 3. Fade out the bottle wrapper before Section 3
-        gsap.to(".hero-bottle-wrapper", {
-          scrollTrigger: {
-            trigger: ".black-spacer",
-            start: "top center",
-            end: "bottom center",
-            scrub: true
-          },
-          opacity: 0
+        // 3. Bottle shifts left slightly during Section 3
+        pinAndAnimate({
+          trigger: ".timeline-section",
+          endTrigger: "footer",
+          pin: ".hero-bottle-wrapper",
+          animations: [
+            { target: ".hero-bottle", vars: { rotate: -5, scale: 0.5 } },
+            { target: ".hero-bottle-wrapper", vars: { x: "-15%" } },
+          ],
+          markers: false,
+          headerOffset,
         });
       },
     });
@@ -227,6 +231,72 @@ window.addEventListener("DOMContentLoaded", () => {
   runInitialAnimations(); // Load-in animations
   setupScrollAnimations(); // Scroll-based animations
 
+  // Make header translucent when scrolling into the dark timeline sections
+  ScrollTrigger.create({
+    trigger: ".section-intro",
+    start: "top 100px", // Trigger right when it goes under the header
+    onEnter: () => header.classList.add("scrolled"),
+    onLeaveBack: () => header.classList.remove("scrolled"),
+  });
+
   // Final recalculation for all ScrollTriggers
   ScrollTrigger.refresh();
+
+  // ==========================
+  // Section 5 Flip Animation
+  // ==========================
+  const triggerFlipOnScroll = (galleryEl, options) => {
+    let settings = {
+      flip: {
+        absoluteOnLeave: false,
+        absolute: false,
+        scale: true,
+        simple: true,
+      },
+      scrollTrigger: {
+        start: 'center center',
+        end: '+=100%',
+      },
+      stagger: 0
+    };
+
+    settings = Object.assign({}, settings, options);
+
+    // Select our specific text container and items
+    const galleryCaption = galleryEl.querySelector('.s5-text-container');
+    const galleryItems = galleryEl.querySelectorAll('.s5-item');
+
+    // Temporarily add the class to capture the target state
+    galleryEl.classList.add('s5-gallery--switch');
+    const flipstate = Flip.getState([galleryItems, galleryCaption], { props: 'filter, opacity, transform' });
+
+    // Remove the class to revert to initial state (stacked)
+    galleryEl.classList.remove('s5-gallery--switch');
+
+    // Create Flip animation linked to ScrollTrigger
+    Flip.to(flipstate, {
+      ease: 'power1.inOut',
+      absoluteOnLeave: settings.flip.absoluteOnLeave,
+      absolute: settings.flip.absolute,
+      scale: settings.flip.scale,
+      simple: settings.flip.simple,
+      scrollTrigger: {
+        trigger: galleryEl,
+        start: settings.scrollTrigger.start,
+        end: settings.scrollTrigger.end,
+        pin: false, // Don't pin the whole section, let it scroll naturally or adjust if needed
+        scrub: true,
+      },
+      stagger: settings.stagger
+    });
+  };
+
+  const galleryElement = document.querySelector('.s5-gallery-container');
+  if (galleryElement) {
+    triggerFlipOnScroll(galleryElement, {
+      flip: { absoluteOnLeave: true, scale: false },
+      scrollTrigger: { start: 'top 80%', end: 'center center' } // Trigger while scrolling down into it
+    });
+  }
+
 });
