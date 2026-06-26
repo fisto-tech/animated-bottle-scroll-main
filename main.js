@@ -165,7 +165,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 3. Bottle shifts left during Section 3
         pinAndAnimate({
           trigger: ".timeline-section",
-          endTrigger: "footer",
+          endTrigger: ".timeline-section-2",
           pin: ".hero-bottle-wrapper",
           animations: [
             { target: ".hero-bottle", vars: { rotate: -10, scale: 0.7 } },
@@ -211,7 +211,7 @@ window.addEventListener("DOMContentLoaded", () => {
         // 3. Bottle shifts left slightly during Section 3
         pinAndAnimate({
           trigger: ".timeline-section",
-          endTrigger: "footer",
+          endTrigger: ".timeline-section-2",
           pin: ".hero-bottle-wrapper",
           animations: [
             { target: ".hero-bottle", vars: { rotate: -5, scale: 0.5 } },
@@ -225,11 +225,40 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   // ==========================
+  // Text Animations
+  // ==========================
+  function setupTextAnimations() {
+    // Select text elements in Section 2
+    const introElements = gsap.utils.toArray(
+      ".section-intro .intro-left > *, .section-intro .feature-item"
+    );
+
+    // Initial state: slightly down and invisible
+    gsap.set(introElements, { y: 30, opacity: 0 });
+
+    ScrollTrigger.create({
+      trigger: ".section-intro",
+      start: "top 65%",
+      onEnter: () => {
+        gsap.to(introElements, {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power2.out",
+        });
+      },
+      once: true,
+    });
+  }
+
+  // ==========================
   // Init Everything on Load
   // ==========================
 
   runInitialAnimations(); // Load-in animations
   setupScrollAnimations(); // Scroll-based animations
+  setupTextAnimations(); // Fade in text on scroll
 
   // Make header translucent when scrolling into the dark timeline sections
   ScrollTrigger.create({
