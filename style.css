@@ -33,12 +33,17 @@
   box-sizing: border-box;
 }
 
+html {
+  overflow-x: hidden;
+}
+
 /* === Body Styling === */
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
   background-color: var(--bg-color);
   color: var(--text-color);
+  overflow-x: hidden;
 }
 
 /* === Header Bar === */
@@ -202,11 +207,23 @@ main {
   z-index: 900;
   margin: 0;
   height: 100%;
-  border-right: 1px solid var(--border-color);
   background-color: transparent;
   display: flex;
   justify-content: center;
   padding-top: 4rem;
+  border-right: none;
+}
+
+.social-sidebar::before {
+  content: "";
+  position: absolute;
+  top: 100vh;
+  /* Starts exactly after the first page */
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  background-color: var(--border-color);
+  display: block;
 }
 
 .sidebar-number {
@@ -316,7 +333,6 @@ footer {
   }
 }
 
-/* === Hero Section === */
 .hero {
   position: relative;
   min-height: calc(100vh - 100px);
@@ -324,9 +340,22 @@ footer {
   align-items: center;
   justify-content: center;
   background: var(--bg-gradient);
-  padding: 2rem;
+
+  /* Fix: Extend background to cover the left sidebar margin */
+  margin-left: -103px;
+  width: calc(100% + 103px);
+  padding: 2rem 2rem 2rem calc(103px + 2rem);
+
   text-align: center;
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 2rem;
+  }
 }
 
 .hero-right-leaf {
@@ -405,11 +434,13 @@ footer {
   top: 0;
   height: 100vh;
   width: 100%;
-  z-index: 4;
+  z-index: 999;
   opacity: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  pointer-events: none;
+  /* Let clicks pass through to buttons beneath */
 }
 
 /* Actual bottle image */
@@ -434,8 +465,14 @@ footer {
 
   .hero-bottle-wrapper {
     height: 60vh;
-    z-index: 4;
-    /* Place above the text sections */
+    z-index: 999;
+    /* Ensure bottle stays visible above all sections */
+  }
+
+  .hero-bottle {
+    left: 7%;
+    right: -7%;
+    /* Very mildly shifted to the right */
   }
 
   .hero-right-leaf {
@@ -562,6 +599,11 @@ footer {
 @media (max-width: 768px) {
 
   .section-intro::before,
+  .black-image-section::before,
+  .black-spacer::before {
+    display: none;
+  }
+
   .timeline-section::before {
     left: 0;
     width: 100%;
@@ -590,15 +632,16 @@ footer {
 
 /* === Section 2 Overrides === */
 .section-intro {
-  background-image: url('./section2BG.webp');
-  background-size: cover;
-  background-position: center;
+  /* Replaced background image with video */
   color: #fff;
   padding: 6rem 2rem;
   margin-left: -103px;
   padding-left: calc(103px + 2rem);
   height: auto;
   aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
 }
 
 @media (max-width: 768px) {
@@ -608,9 +651,21 @@ footer {
   }
 }
 
-.section-intro::before {
-  display: none;
-  /* remove the tan line from before if it interferes */
+.section-intro::before,
+.black-image-section::before,
+.black-spacer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 130px;
+  /* Shifted further right as requested */
+  height: 100%;
+  width: 1px;
+  background-color: #fff;
+  /* Solid white line for visibility */
+  display: block;
+  z-index: 999;
+  pointer-events: none;
 }
 
 /* Sidebar "02" within Section 2 */
@@ -746,7 +801,7 @@ footer {
 
 /* === Timeline Section (Section 3) === */
 .timeline-section {
-  background-image: url('./section3BG1.png');
+  background-image: url('./section3BG1.webp');
   background-size: cover;
   background-position: top center;
   color: #fff;
@@ -761,7 +816,7 @@ footer {
 }
 
 .timeline-section-2 {
-  background-image: url('./section3bg2.png');
+  background-image: url('./section3BG2.webp');
   background-size: cover;
   background-position: top center;
   color: #fff;
@@ -775,12 +830,190 @@ footer {
   position: relative;
 }
 
+.black-image-section {
+  background-image: url('./black.png');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  padding: 10rem 4rem 10rem calc(103px + 4rem);
+  margin-left: -103px;
+  width: calc(100% + 103px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.stone-pedestal {
+  position: absolute;
+  bottom: -200px;
+  /* Moved further down to overlap the block below */
+  left: 130px;
+  /* Aligned near the vertical line */
+  width: 70%;
+  max-width: 800px;
+  z-index: 3;
+  /* Over black spacer (2) but under bottle (4) */
+  pointer-events: none;
+}
+
+.black-image-left,
+.black-image-right {
+  position: relative;
+  z-index: 1;
+}
+
+.black-image-content {
+  max-width: 450px;
+}
+
+.black-image-content .small-title {
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.black-image-content .main-heading {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: #fff;
+}
+
+.black-image-content .description {
+  color: #ccc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Right side cards */
+.black-image-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2rem;
+}
+
+.edition-title {
+  font-family: "Veneer", serif;
+  font-size: 4.5rem;
+  line-height: 1.1;
+  color: #5d7c36;
+  text-align: right;
+  font-weight: 100;
+  letter-spacing: 2px;
+}
+
+.color-cards-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.color-card {
+  width: 70px;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.color-card:hover {
+  transform: translateY(-5px);
+}
+
+.color-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid transparent;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.color-card.active img {
+  border-color: #fff;
+}
+
+.color-card .active-indicator {
+  display: none;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 2px;
+  background-color: #fff;
+}
+
+.color-card.active .active-indicator {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .black-image-section {
+    margin-left: 0;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 4rem;
+    padding-bottom: 12rem;
+    /* Extended bottom padding to enclose the color cards */
+    width: 100%;
+    flex-direction: column;
+    text-align: left;
+    align-items: stretch;
+  }
+
+  .black-image-content {
+    max-width: 100%;
+  }
+
+  .black-image-content .main-heading {
+    font-size: 2.5rem;
+  }
+
+  .black-image-left {
+    order: 1;
+  }
+
+  .stone-pedestal {
+    position: relative;
+    order: 2;
+    bottom: auto;
+    left: -8%;
+    /* Move stone slightly towards left */
+    width: 100%;
+    max-width: 100%;
+    margin-top: 3rem;
+    /* Push stone down so the bottle lands perfectly on top */
+  }
+
+  .black-image-right {
+    position: absolute;
+    bottom: 2rem;
+    /* Move cards slightly down */
+    left: 0;
+    width: 100%;
+    align-items: center;
+    margin-top: 0;
+    z-index: 5;
+  }
+
+  .edition-title {
+    display: none;
+    /* Hide Forest Edition text only on mobile */
+  }
+
+  .color-cards-row {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    /* Reduce gap so all 4 cards fit on one row */
+    margin-top: 0;
+  }
+}
+
 .timeline-section-3 {
-  background-image: url('./section4BG.png');
-  background-size: 100% 100%;
-  /* Force image to completely fit the container, zero cropping */
-  background-position: top center;
-  background-repeat: no-repeat;
+  /* Removed background image to use video instead */
   color: #fff;
   padding: 6rem 0rem 3rem;
   margin-left: -103px;
@@ -788,11 +1021,25 @@ footer {
   display: flex;
   flex-direction: column;
   height: auto;
-  aspect-ratio: 3524 / 1184;
-  /* Reverted to native ratio to prevent zooming/cropping */
+  aspect-ratio: 16 / 8.5;
+  /* Slightly reduced height */
   position: relative;
+  overflow: hidden;
   z-index: 901;
   /* Hides the underlying social-sidebar border-right line */
+}
+
+/* Video Background Styling */
+.bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Behave like background-size: cover */
+  z-index: -1;
+  /* Place behind content */
 }
 
 /* === Section 4 Specific Layout === */
@@ -851,8 +1098,10 @@ footer {
 /* === Section 4 Right Side Features === */
 .section4-right {
   position: absolute;
-  top: 16%;
-  bottom: 10%;
+  top: 20%;
+  /* Increased from 16% to push the top text down */
+  bottom: 22%;
+  /* Increased from 18% to push the bottom text further up */
   right: 8%;
   /* Mildly shifted left from 7% */
   width: 23%;
@@ -869,6 +1118,11 @@ footer {
   /* Space for the background icon */
   padding-right: 1.5rem;
   /* Keep text away from right edge */
+}
+
+/* Nudge only the first box down slightly to align inside its glass box */
+.s4-feature-box:first-child {
+  padding-top: 15px;
 }
 
 .s4-feature-title {
@@ -888,15 +1142,28 @@ footer {
   font-weight: 500;
 }
 
+/* Ensure JS marquee wrappers don't break desktop layout */
+@media (min-width: 769px) {
+  .marquee-wrapper {
+    display: contents;
+  }
+
+  .marquee-wrapper:nth-child(2) {
+    display: none;
+  }
+}
+
+
 /* === Section 5 specific layout === */
 .timeline-section-4 {
-  background-image: url('./section5BG.png');
+  background-image: url('./section5BG.webp');
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
   color: #fff;
   padding: 6rem 0rem 3rem;
   margin-left: -103px;
+  margin-top: -2px;
   padding-left: calc(103px + 2rem);
   display: flex;
   flex-direction: column;
@@ -935,6 +1202,8 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 5rem;
+  /* Pushes the images and text slightly down */
 }
 
 .s5-gallery {
@@ -1019,37 +1288,57 @@ footer {
 /* Target state (GSAP Flip): spread out into curved coverflow */
 .s5-gallery--switch .s5-item-3 {
   left: 50%;
-  transform: translateX(-50%) translateZ(30px);
+  transform: translateX(-50%);
 }
 
 .s5-gallery--switch .s5-item-2 {
   left: 30%;
-  transform: translateX(-50%) rotateY(20deg);
+  transform: translateX(-50%);
 }
 
 .s5-gallery--switch .s5-item-4 {
   left: 70%;
-  transform: translateX(-50%) rotateY(-20deg);
+  transform: translateX(-50%);
 }
 
 .s5-gallery--switch .s5-item-1 {
   left: 14%;
-  transform: translateX(-50%) rotateY(30deg);
+  transform: translateX(-50%);
 }
 
 .s5-gallery--switch .s5-item-5 {
   left: 86%;
-  transform: translateX(-50%) rotateY(-30deg);
+  transform: translateX(-50%);
 }
 
 /* Text block */
 .s5-text-container {
   text-align: center;
-  z-index: 10;
-  position: relative;
-  margin-top: 3%;
+  z-index: 20;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin-top: -2%; /* Visually center it over the images */
   opacity: 0;
   transform: translateY(50px);
+  pointer-events: none; /* Let clicks pass through to the gallery */
+}
+
+.s5-vector-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+  /* Space between text and vector */
+  z-index: 10;
+  position: relative;
+}
+
+.s5-vector-image {
+  max-width: 90%;
+  height: auto;
+  border-radius: 12px;
 }
 
 .s5-gallery--switch .s5-text-container {
@@ -1128,7 +1417,9 @@ footer {
 
   .timeline-section,
   .timeline-section-2,
-  .timeline-section-3 {
+  .timeline-section-3,
+  .timeline-section-4,
+  .timeline-section-5 {
     margin-left: 0;
     padding-left: 2rem;
   }
@@ -1346,13 +1637,20 @@ footer {
 
 /* === Section 6 (Splash Image Only) === */
 .timeline-section-5 {
-  background-color: var(--bg-color); /* Beige background */
+  background-color: var(--bg-color);
+  background-image: url('./section6BG.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* Beige background */
   padding: 6rem 0rem;
-  margin-left: -103px; /* Shift left to cover the main timeline vertical border */
+  margin-left: -103px;
+  /* Shift left to cover the main timeline vertical border */
   padding-left: 103px;
   min-height: 80vh;
   position: relative;
-  z-index: 950; /* Higher than sidebar z-index (900) so its background covers the line */
+  z-index: 950;
+  /* Higher than sidebar z-index (900) so its background covers the line */
 }
 
 .s6-content-wrapper {
@@ -1368,7 +1666,8 @@ footer {
 
 /* Left Column */
 .s6-left {
-  flex: 0 0 450px; /* Fixed width to match screenshot exactly */
+  flex: 0 0 450px;
+  /* Fixed width to match screenshot exactly */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1386,7 +1685,8 @@ footer {
   color: var(--primary);
   line-height: 1.1;
   margin-bottom: 3rem;
-  font-size: 4rem; /* Match the large Veneer font */
+  font-size: 4rem;
+  /* Match the large Veneer font */
   font-family: 'Veneer', serif;
 }
 
@@ -1450,8 +1750,10 @@ footer {
 .s6-middle {
   flex: 1;
   display: flex;
-  justify-content: flex-start; /* Image extends to the left relative to its flex box */
-  margin-left: -5rem; /* Pulled slightly left to match screenshot overlap */
+  justify-content: flex-start;
+  /* Image extends to the left relative to its flex box */
+  margin-left: -5rem;
+  /* Pulled slightly left to match screenshot overlap */
 }
 
 .s6-splash-img {
@@ -1464,7 +1766,8 @@ footer {
 
 /* === Custom Footer === */
 .custom-footer {
-  background-color: var(--primary); /* Dark Green */
+  background-color: var(--primary);
+  /* Dark Green */
   color: #fff;
   position: relative;
   z-index: 950;
@@ -1474,7 +1777,9 @@ footer {
 .footer-top {
   display: flex;
   justify-content: space-between;
-  padding: 4rem 4rem 4rem 0; /* No left padding initially, we'll handle it per column */
+  align-items: center; /* Center items to avoid stretching and extra height */
+  padding: 0 4rem 0 0;
+  /* Removed top and bottom padding completely */
   margin-left: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   max-width: 1400px;
@@ -1501,7 +1806,8 @@ footer {
   flex-direction: column;
   align-items: center;
   position: relative;
-  z-index: 2; /* Sit above the line */
+  z-index: 2;
+  /* Sit above the line */
 }
 
 .footer-leaf {
@@ -1596,8 +1902,312 @@ footer {
 /* Bottom Copyright */
 .footer-bottom {
   text-align: center;
-  padding: 2rem 0;
+  padding: 0.5rem 0;
   font-size: 0.9rem;
   opacity: 0.8;
   position: relative;
+}
+
+/* === Section 6 Right Form === */
+.s6-right {
+  flex: 0 0 500px;
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.form-row .form-input {
+  flex: 1;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 1px solid rgba(55, 71, 50, 0.15);
+  /* light primary border */
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.4);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  color: var(--primary);
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #888;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  border-color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.form-submit {
+  background-color: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 1.25rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  letter-spacing: 0.5px;
+}
+
+.form-submit:hover {
+  background-color: var(--primary-light);
+}
+
+/* === Section 6 Responsive Form === */
+@media (max-width: 900px) {
+  .s6-content-wrapper {
+    flex-direction: column;
+    padding: 0 1.5rem;
+    gap: 3rem;
+  }
+
+  .s6-left,
+  .s6-right {
+    flex: 1;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .form-row {
+    flex-direction: column;
+  }
+}
+
+/* === Restored Mobile Fixes (from accidental rejection) === */
+@media (max-width: 768px) {
+
+  /* Section 6 (Contact) Mobile Layout Fixes */
+  .timeline-section-5 {
+    background-position: right center !important;
+  }
+  .s6-title {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+  }
+
+  /* Fix bottle visibility over section backgrounds */
+  .hero-bottle-wrapper,
+  .pin-spacer {
+    z-index: 999 !important;
+  }
+
+  .section-intro,
+  .timeline-section {
+    z-index: auto !important;
+  }
+
+  /* Prevent video sections from shrinking and cutting off content */
+  .section-intro,
+  .timeline-section-3,
+  .timeline-section-4 {
+    aspect-ratio: auto !important;
+    min-height: 100vh;
+  }
+
+  /* Hide the black spacer on mobile */
+  .black-spacer {
+    background-color: transparent !important;
+    height: 1px !important;
+    border: none !important;
+  }
+
+  /* Section 4 (Leaf Video) Mobile Layout Fixes */
+  .sidebar-04 {
+    display: none !important;
+  }
+
+  /* Reduce mask group gallery height on mobile */
+  .s5-gallery {
+    height: 35% !important;
+  }
+
+  .section4-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 10;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    min-height: 100vh;
+  }
+
+  .section4-left {
+    position: relative;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    text-align: center;
+    background-color: transparent;
+    padding: 0 1rem;
+    margin: 0;
+    box-shadow: none;
+    text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9), 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+
+  .s4-small-title {
+    justify-content: center;
+  }
+
+  .s4-heading {
+    font-size: 2.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .s4-desc-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .s4-desc {
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .bottom-icon {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0;
+  }
+
+  .bottom-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Horizontal swipeable feature cards anchored to the bottom */
+  .section4-right {
+    position: absolute;
+    top: auto;
+    bottom: 2rem;
+    left: 0;
+    right: auto;
+    width: max-content;
+    height: auto;
+    gap: 0;
+    /* gap handled by wrapper now */
+    padding: 1rem 0;
+    /* remove side padding to avoid jumping */
+    margin-top: 0;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .marquee-wrapper {
+    display: flex;
+    gap: 1rem;
+    padding-right: 1rem;
+    /* matches the gap */
+  }
+
+
+  .s4-feature-box {
+    width: 85vw;
+    padding-left: 0;
+    padding-right: 0;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.65);
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  }
+
+  .s4-feature-box:first-child {
+    padding-top: 1.25rem;
+  }
+}
+
+/* === Safe Viewport Fixes for Mobile === */
+@media (max-width: 768px) {
+
+  .hero,
+  .section-intro,
+  .black-image-section,
+  .timeline-section,
+  .timeline-section-3,
+  .timeline-section-4,
+  .timeline-section-5 {
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Specific fix for Section 3BG2 to make the river floor meet the bottle */
+  .timeline-section-2 {
+    min-height: 75vh !important;
+    min-height: 75dvh !important;
+    width: 100vw !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    background-position: bottom center !important;
+  }
+
+  .timeline-section-2 .feature-right {
+    transform: translateY(3rem) !important;
+    margin-right: 0 !important;
+  }
+
+  /* Force hide all decorative vertical/horizontal background lines on mobile */
+  .section-intro::before,
+  .section-intro::after,
+  .black-image-section::before,
+  .black-image-section::after,
+  .black-spacer::before,
+  .black-spacer::after {
+    display: none !important;
+  }
+
+  /* === Footer Mobile Layout Fixes === */
+  .footer-top {
+    flex-direction: column !important;
+    padding: 3rem 1rem !important;
+    gap: 3rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-col {
+    padding: 0 !important;
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-col-logo {
+    flex: none !important;
+  }
+
+  .footer-social-icons {
+    justify-content: center;
+  }
 }
